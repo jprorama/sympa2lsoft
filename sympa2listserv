@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#
+# list conversion from Sympa to ListServ
+# 
+
+# pass the target list name
+list=$1
+
+# list config file location
+listconfig=/home/sympa/expl/$list/config
+
+# admin password on listserv
+adminpass=$2
+
+# make it easier to type ListServ by pre
+
+
+# get description of list
+desc=`awk -F "subject" '/^subject /{print $2}' $listconfig`
+
+# print config header for ListServe
+echo put $list LIST PW=$adminpass
+echo \*
+echo \* $list $desc
+echo \*
+echo \* .HH ON
+
+# default options for modern Internet lists
+echo \* Default-options: REPRO,NOACK,SUBJecthdr
+
+# get owners
+sed -e '/owner/,/^$/!d' -e '/email/!d' -e 's/email/\* Owner= /' $listconfig
+
+# ignore editors for now since the semantics are different
+# ListServ treates editors as round-robin assigned
+# Sympa treates editors as moderators who always get message
+sed -e '/editor/,/^$/!d' -e '/email/!d' -e 's/email/\* Editor= /' $listconfig
+
+# Get reply-to header config
+awk '/reply_to_header/,/^$/{ if ($1 ~ /apply/) { if ($2 ~ /forced/) {p2="ignore"} else p2=$2}; if ($1 ~ /other_email/) { other_email=$2} ; if ($1 ~ /value/) { if ($2 ~ /all/ ) {p1="both"} else if ($2 ~ /other_email/) {p1 = other_email } else p1=$2}} END {print "* Reply-to: " p1 "," p2}' $listconfig
+
+# get subject tag
+awk '/^custom_subject /{print "* Subject-Tag= " $2}' $listconfig 
+
+echo \* .HH OFF
+echo \*
