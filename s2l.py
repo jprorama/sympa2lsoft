@@ -33,5 +33,16 @@ i=0
 for rec in record(fileinput.input()):
     i = i + 1
     print "record", i
+    # parse record type and value for one line records
+    fields = rec.split('\n')
+    rectype = fields[0].rsplit(" ")
+    if len(rectype) == 2:
+        rectype  = rectype[0]
+        defvalue = rectype[1]
+    else:
+        rectype  = rectype[0]
+        defvalue = ""
+
+    print rectype
     print rec
     print
