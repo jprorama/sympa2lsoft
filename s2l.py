@@ -6,6 +6,7 @@
 
 import fileinput
 import re
+import json
 
 # record generator for sympa config file
 # each record is separated by blank lines
@@ -30,6 +31,7 @@ def record(file):
 
 # process config file one record at a time
 i=0
+config={}
 for rec in record(fileinput.input()):
     i = i + 1
     print "record", i
@@ -39,14 +41,14 @@ for rec in record(fileinput.input()):
     if len(rectype) == 2:
         rectype  = rectype[0]
         defvalue = rectype[1]
+        config[rectype] = defvalue
     else:
         rectype  = rectype[0]
         defvalue = ""
+        config[rectype] = {}
 
-    for row in (xrange(1,len(fields))):
-        recval = fields[row].split(" ")
-        print "name", recval[0], ", value", recval[1]
+        for row in (xrange(1,len(fields))):
+            recval = fields[row].split(" ")
+            config[rectype][recval[0]] = recval[1]
 
-    print rectype
-    print rec
-    print
+print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
