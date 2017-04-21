@@ -43,6 +43,10 @@ for rec in record(fileinput.input()):
         rectype  = rectype[0]
         defvalue = ""
 
+    for row in (xrange(1,len(fields))):
+        recval = fields[row].split(" ")
+        print "name", recval[0], ", value", recval[1]
+
     print rectype
     print rec
     print
