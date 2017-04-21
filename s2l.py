@@ -34,10 +34,10 @@ config={}
 for rec in record(fileinput.input()):
     # parse record type and value for one line records
     fields = rec.split('\n')
-    rectype = fields[0].rsplit(" ")
-    if len(rectype) == 2:
-        rectype  = rectype[0]
+    rectype = fields[0].split(" ", 1)
+    if len(fields) == 1:
         defvalue = rectype[1]
+        rectype  = rectype[0]
         config[rectype] = defvalue
     else:
         rectype  = rectype[0]
@@ -45,7 +45,7 @@ for rec in record(fileinput.input()):
         config[rectype] = {}
 
         for row in (xrange(1,len(fields))):
-            recval = fields[row].split(" ")
+            recval = fields[row].split(" ", 1)
             config[rectype][recval[0]] = recval[1]
 
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
