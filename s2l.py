@@ -119,6 +119,9 @@ for rec in record(fileinput.input()):
 
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
 
+# common defnitions safe Default
+print "* Review= Private"
+
 # default options for modern Internet lists
 # http://www.lsoft.com/manuals/16.0/listkeyw.html#kDefaultOptions
 # users get a copy of their own messages
