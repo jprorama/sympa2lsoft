@@ -8,6 +8,8 @@ import fileinput
 import re
 import json
 
+ownercnt=0
+
 # record generator for sympa config file
 # each record is separated by blank lines
 # records are returned one record at a time
@@ -47,5 +49,14 @@ for rec in record(fileinput.input()):
         for row in (xrange(1,len(fields))):
             recval = fields[row].split(" ", 1)
             config[rectype][recval[0]] = recval[1]
+
+    # parse owner record
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#kOwner
+    # The first owner is also editor to act as the default moderatorcnt
+    if rectype == "owner":
+        print "* Owners=", config[rectype]["email"]
+        if ownercnt == 0:
+            print "* Editor=", config[rectype]["email"]
+            ownercnt = ownercnt + 1
 
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
