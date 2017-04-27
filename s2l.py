@@ -71,4 +71,10 @@ for rec in record(fileinput.input()):
         else:
             print "* Moderator= ", config[rectype]["email"]
 
+    # parse subject tagging
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#kModerator
+    # Will set default to on for lists with SUBJecthdr in Default-options
+    elif rectype == "custom_subject":
+        print "* Subject-Tag=", config[rectype]
+
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
