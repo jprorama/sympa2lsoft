@@ -108,3 +108,13 @@ for rec in record(fileinput.input()):
             print "* Subscription: Closed"
 
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
+
+# default options for modern Internet lists
+# http://www.lsoft.com/manuals/16.0/listkeyw.html#kDefaultOptions
+# users get a copy of their own messages
+# they don't need to confirm to post
+# Subject tagging is default
+print "* Default-options: REPRO,NOACK,SUBJecthdr"
+
+# http://www.lsoft.com/manuals/16.0/listkeyw.html#kMailMerge
+print "* Mail-Merge= No"
