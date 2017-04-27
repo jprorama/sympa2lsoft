@@ -95,4 +95,16 @@ for rec in record(fileinput.input()):
 
         print "* Reply-to=", p1,",", p2
 
+    # parse subscription options
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#kSubscription
+    # not all models supported, in particular the *_notify feature is not
+    # also only support "confirm" option to avoid unintended subscription
+    elif rectype == "subscribe":
+        if re.search("^open", config[rectype]):
+            print "* Subscription: Open,Confirm"
+        elif re.search("^owner", config[rectype]):
+            print "* Subscription: By_Owner,Confirm"
+        elif config[rectype] == "closed":
+            print "* Subscription: Closed"
+
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
