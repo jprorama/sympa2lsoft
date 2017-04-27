@@ -45,11 +45,21 @@ for rec in record(fileinput.input()):
     else:
         rectype  = rectype[0]
         defvalue = ""
-        config[rectype] = {}
+        fields = {}
 
+        # build dictionary of fields in record
         for row in (xrange(1,len(fields))):
             recval = fields[row].split(" ", 1)
-            config[rectype][recval[0]] = recval[1]
+            feilds[recval[0]] = recval[1]
+
+        # if a config exists convert to list of entries
+        if rectype in config:
+            if not config[rectype][0]:
+                # turn it into a list an
+                config[rectype] = [ config[rectype] ]
+            config[rectype].append( fields )
+        else:
+            config[rectype] = fields
 
     # parse owner record
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kOwner
