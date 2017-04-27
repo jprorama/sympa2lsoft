@@ -77,4 +77,22 @@ for rec in record(fileinput.input()):
     elif rectype == "custom_subject":
         print "* Subject-Tag=", config[rectype]
 
+    # parse reply to header
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#kReplyTo
+    # the semantics don't map completely
+    elif rectype == "reply_to_header":
+        if config[rectype]["apply"] == "forced":
+            p2="ignore"
+        else:
+            p2=config[rectype]["apply"]
+
+        if config[rectype]["value"] == "all":
+            p1="both"
+        elif config[rectype]["value"] == "other_email":
+            p1=config[rectype]["other_email"]
+        else:
+            p1=config[rectype]["value"]
+
+        print "* Reply-to=", p1,",", p2
+
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
