@@ -9,6 +9,7 @@ import re
 import json
 
 ownercnt=0
+moderatorcnt=0
 
 # record generator for sympa config file
 # each record is separated by blank lines
@@ -58,5 +59,16 @@ for rec in record(fileinput.input()):
         if ownercnt == 0:
             print "* Editor=", config[rectype]["email"]
             ownercnt = ownercnt + 1
+
+    # parse editor record
+    # editors are moderators
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#kModerator
+    # use ALL keyword to retain semantics so all moderators see requests
+    elif rectype == "editor":
+        if moderatorcnt == 0:
+            print "* Moderator= All,", config[rectype]["email"]
+            moderatorcnt = moderatorcnt + 1
+        else:
+            print "* Moderator= ", config[rectype]["email"]
 
 print json.dumps(config, sort_keys=True,indent=4, separators=(',', ': '))
