@@ -30,11 +30,11 @@ for rectype in sorted(config.keys()):
     # The first owner is also editor to act as the default moderatorcnt
     if rectype == "owner":
         if type(config[rectype]).__name__ == "dict":
-            print "* Owners= {}".format(config[rectype]["email"])
+            print "* Owner= {}".format(config[rectype]["email"])
             print "* Editor= {}".format(config[rectype]["email"])
         else:
             for i in range(0, len(config[rectype])):
-                print "* Owners= {}".format(config[rectype][i]["email"])
+                print "* Owner= {}".format(config[rectype][i]["email"])
                 if ownercnt == 0:
                     print "* Editor= {}".format(config[rectype][i]["email"])
                     ownercnt = ownercnt + 1
@@ -105,6 +105,7 @@ for rectype in sorted(config.keys()):
 # Subject tagging is default
 print "* Default-options: REPRO,NOACK,SUBJecthdr"
 
+# Lsoft recommends no
 # http://www.lsoft.com/manuals/16.0/listkeyw.html#kMailMerge
 print "* Mail-Merge= No"
 
