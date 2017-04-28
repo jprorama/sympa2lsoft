@@ -61,25 +61,36 @@ for rec in record(fileinput.input()):
         else:
             config[rectype] = tmp
 
+for rectype in sorted(config.keys()):
     # parse owner record
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kOwner
     # The first owner is also editor to act as the default moderatorcnt
     if rectype == "owner":
-        print "* Owners=", config[rectype]["email"]
-        if ownercnt == 0:
+        if type(config[rectype]).__name__ == "dict":
+            print "* Owners=", config[rectype]["email"]
             print "* Editor=", config[rectype]["email"]
-            ownercnt = ownercnt + 1
+        else:
+            for i in range(0, len(config[rectype])):
+                print "* Owners=", config[rectype][i]["email"]
+                if ownercnt == 0:
+                    print "* Editor=", config[rectype][i]["email"]
+                    ownercnt = ownercnt + 1
+
 
     # parse editor record
     # editors are moderators
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kModerator
     # use ALL keyword to retain semantics so all moderators see requests
     elif rectype == "editor":
-        if moderatorcnt == 0:
-            print "* Moderator= All,", config[rectype]["email"]
-            moderatorcnt = moderatorcnt + 1
-        else:
+        if type(config[rectype]).__name__ == "dict":
             print "* Moderator= ", config[rectype]["email"]
+        else:
+            for i in range(0, len(config[rectype])):
+                if moderatorcnt == 0:
+                    print "* Moderator= All,", config[rectype][i]["email"]
+                    moderatorcnt = moderatorcnt + 1
+                else:
+                    print "* Moderator= ", config[rectype][i]["email"]
 
     # parse subject tagging
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kModerator
