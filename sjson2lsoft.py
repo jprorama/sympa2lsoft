@@ -81,8 +81,12 @@ for rectype in sorted(config.keys()):
         elif config[rectype] == "closed":
             print "* Subscription: Closed"
 
-# common defnitions safe Default
-print "* Review= Private"
+    # parse the review permission
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#kReview
+    # relies on the access-level values which are a superset of sympa
+    # http://www.lsoft.com/manuals/16.0/listkeyw.html#bGeneric
+    elif rectype == "review":
+        print "* Review= {}".format(config[rectype])
 
 # default options for modern Internet lists
 # http://www.lsoft.com/manuals/16.0/listkeyw.html#kDefaultOptions
