@@ -14,6 +14,16 @@ moderatorcnt=0
 # loaded from json input
 config=json.load(sys.stdin)
 
+listname=sys.argv[1]
+password=sys.argv[2]
+
+# generate the lsoft list header (config)
+print "put {} LIST PW={}".format(listname,password)
+print "*"
+print "* {} {}".format(listname,config["subject"])
+print "*"
+print "* .HH ON"
+
 for rectype in sorted(config.keys()):
     # parse owner record
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kOwner
@@ -97,3 +107,7 @@ print "* Default-options: REPRO,NOACK,SUBJecthdr"
 
 # http://www.lsoft.com/manuals/16.0/listkeyw.html#kMailMerge
 print "* Mail-Merge= No"
+
+# config footer
+print "* .HH OFF"
+print "*"
