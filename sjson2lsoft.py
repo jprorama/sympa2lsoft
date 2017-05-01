@@ -20,7 +20,7 @@ password=sys.argv[2]
 # generate the lsoft list header (config)
 print "put {} LIST PW={}".format(listname,password)
 print "*"
-print "* {} {}".format(listname,config["subject"])
+print "* {}".format(config["subject"])
 print "*"
 print "* .HH ON"
 
