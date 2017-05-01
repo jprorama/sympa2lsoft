@@ -12,3 +12,10 @@ Run it in a pipeline like this
 '''
 sympa2json.py <sympa-config>  | ./sjson2lsoft.py <listname> <ownerpass>
 '''
+
+Get a list header by copying the listserv-config.json-ex file to 
+listserv-config.json and changing the values for local configuration. Submit
+the header (config) request with
+'''
+get-listconfig.py <listname>
+'''
