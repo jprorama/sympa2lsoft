@@ -1,0 +1,5 @@
+{
+  "smtp": "smtp.example.org",
+  "from": "myemail@example.org",
+  "listserv": "listserv@example.org"
+}
