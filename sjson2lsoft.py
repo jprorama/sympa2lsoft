@@ -85,11 +85,11 @@ for rectype in sorted(config.keys()):
     # also only support "confirm" option to avoid unintended subscription
     elif rectype == "subscribe":
         if re.search("^open", config[rectype]):
-            print "* Subscription: Open,Confirm"
+            print "* Subscription= Open,Confirm"
         elif re.search("^owner", config[rectype]):
-            print "* Subscription: By_Owner,Confirm"
+            print "* Subscription= By_Owner,Confirm"
         elif config[rectype] == "closed":
-            print "* Subscription: Closed"
+            print "* Subscription= Closed"
 
     # parse the review permission
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kReview
@@ -103,7 +103,7 @@ for rectype in sorted(config.keys()):
 # users get a copy of their own messages
 # they don't need to confirm to post
 # Subject tagging is default
-print "* Default-options: REPRO,NOACK,SUBJecthdr"
+print "* Default-options= REPRO,NOACK,SUBJecthdr"
 
 # Lsoft recommends no
 # http://www.lsoft.com/manuals/16.0/listkeyw.html#kMailMerge
