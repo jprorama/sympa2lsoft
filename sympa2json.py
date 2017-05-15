@@ -16,13 +16,24 @@ moderatorcnt=0
 # records are returned one record at a time
 def record(file):
     currec = ""
+    # uncomment for parse debug
+    # linecnt = 0
     found = False # skip leading blank lines in file
     for line in file:
+        # uncomment for parse debug
+        # linecnt =+ linecnt + 1
         line = line.rstrip("\n")
         if re.search("^$", line):
             if found:
-                yield currec
-                currec = ""
+                if currec:
+                    # only yeild records for non-blank lines
+                    yield currec
+                    # uncomment for parse debug
+                    # print "{}: {}".format(linecnt, currec)
+                    currec = ""
+                else:
+                    # skip blank lines
+                    currect = ""
             else:
                 next
         else:
