@@ -22,7 +22,7 @@ def record(file):
     for line in file:
         # uncomment for parse debug
         # linecnt =+ linecnt + 1
-        line = line.rstrip("\n")
+        line = line.lstrip().rstrip("\n")
         if re.search("^$", line):
             if found:
                 if currec:
