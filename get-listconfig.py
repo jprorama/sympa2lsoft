@@ -12,11 +12,25 @@ from email.parser import Parser
 # loaded from json config for listserv
 config=json.load(open("listserv-config.json"))
 
+# sub command
+cmd=sys.argv[1]
+
+# list name
+lname=sys.argv[2]
+
+# build header
+subject = "get list {} {}".format(cmd, lname)
+
+if cmd == "config":
+    lcmd = "GET {} (HEADER NOLOCK".format(lname)
+elif cmd == "subscribers":
+    lcmd = "REVEIW {}".format(lname)
+
 msg = Parser().parsestr('From: {}\n'
                         'To: {}\n'
-                        'Subject: get list config {}\n'
+                        'Subject: {}\n'
                         '\n'
-                        'GET {} (HEADER NOLOCK\n'.format(config["from"], config["listserv"], sys.argv[1], sys.argv[1]))
+                        '{}\n'.format(config["from"], config["listserv"], subject, lcmd))
 
 print msg.as_string()
 
