@@ -65,10 +65,11 @@ for rectype in sorted(config.keys()):
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kReplyTo
     # the semantics don't map completely
     elif rectype == "reply_to_header":
-        if config[rectype]["apply"] == "forced":
-            p2="ignore"
-        else:
-            p2=config[rectype]["apply"]
+        if "apply" in config[rectype]:
+            if config[rectype]["apply"] == "forced":
+                p2="ignore"
+            else:
+                p2=config[rectype]["apply"]
 
         if config[rectype]["value"] == "all":
             p1="both"
@@ -77,7 +78,12 @@ for rectype in sorted(config.keys()):
         else:
             p1=config[rectype]["value"]
 
-        print "* Reply-to= {},{}".format(p1,p2)
+        try:
+            p2
+        except NameError:
+            print "* Reply-to= {}".format(p1)
+        else:
+            print "* Reply-to= {},{}".format(p1,p2)
 
     # parse subscription options
     # http://www.lsoft.com/manuals/16.0/listkeyw.html#kSubscription
