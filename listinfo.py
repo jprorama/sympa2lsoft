@@ -24,7 +24,7 @@ subject = "get list {} {}".format(cmd, lname)
 if cmd == "config":
     lcmd = "GET {} (HEADER NOLOCK".format(lname)
 elif cmd == "subscribers":
-    lcmd = "REVEIW {}".format(lname)
+    lcmd = "REVIEW {}".format(lname)
 
 msg = Parser().parsestr('From: {}\n'
                         'To: {}\n'
